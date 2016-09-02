@@ -1,0 +1,265 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{framed}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{MSAN 601 - Homework 1}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Andre Guimaraes Duarte}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{September 1, 2016}
+  
+% Redefines (sub)paragraphs to behave more like section*s
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+\section*{Question 1}
+%What assumptions are made about the error terms in the normal error regression model? Use both English and mathematical notation to explain each assumption. Why are these assumptions made?
+
+In the normal error regression model, the error terms are assumed to be independent and identically distributed according to a normal distribution with mean $0$ and variance $\sigma^2$: $e_i \sim N(0, \sigma^2)\ \forall i$. This assumption greatly simplifies calculations for inference of new data points.
+
+\section*{Question 2}
+%Prove the equivalence of the F -Test and the T -Test on $\beta_1$ for an SLR model.
+We have $(t^*)^2 = (\frac{b_1}{s\{b_1\}})^2 = \frac{b_1^2}{\frac{MSE}{\sum_{i=1}^n{(X_i - \bar{X})^2}}} = \frac{b_i^2 \sum_{i=1}^n{(X_i - \bar{X})^2}}{MSE}$.
+
+We also have $F^* = \frac{MSR}{MSE} = \frac{\sum_{i=1}^n{(\hat{Y_i} - \bar{Y})^2}}{MSE} = \frac{\sum_{i=1}^n{(b_0 + b_1 X_i - (b_0 + b_1\bar{X}))^2}}{MSE} = \frac{\sum_{i=1}^n{(b_1 X_i - b_1\bar{X})^2}}{MSE} = \frac{b_1^2 \sum_{i=1}^n{(X_i - \bar{X})^2}}{MSE}$.
+
+Therefore, we have shown that for SLR, we get $(t^*)^2 = F^*$.
+
+\section*{Question 3}
+%Are hypotheses tested concerning the actual values of the coefficients, e.g., $\beta_1$, or their estimated values, e.g., $b_1$? Why?
+
+Hypotheses are tested concerning the estimated values of the coefficients because the real values are not known. The estimators obtained with OLS are the best linear unbiased estimators that we can get.
+
+\section*{Question 4}
+%The OLS estimators we derived in class are considered to be the Best Linear Unbiased Estimators (BLUE). Is it a necessary condition to assume normality of the error terms to obtain BLUE OLS estimators? If so, why? If not, when/why do we assume normality of the error terms?
+
+Normality of the error terms is not a necessary condition to obtain BLUE OLS estimators. Only the Gauss-Markov assumptions are needed:
+
+\begin{itemize}
+\item the population process is linear in parameters
+\item the data from the population comes from a random sample
+\item there is no prefect multicollinearity between independent variables
+\item zero conditional mean ($E[\epsilon_i | X_{i1} \ldots X_{ik}] = 0$)
+\item homoscedasticity ($V(\epsilon_i | X_{i1} \ldots X_{ik}) = \sigma^2$)
+\item no serial correlation ($cov(\epsilon_i, \epsilon_j) = 0 \forall i \neq j$)
+\end{itemize}
+
+We assume normality of the error terms in order to establish interval estimates and perform tests, i.e. when we want to make inference based on the data.
+
+\section*{Question 5}
+%You compute a coefficient of determination for a regression model an obtain an $R^2 = 0.832$. What does the strength of the coefficient of determination say about the causal relationship between the explanatory and response variables?
+
+The existence of a statistical relationship between the response variable Y and the explanatory variable X does not imply in any way that Y depends causally on X. No causal relationship can be determined from this result.
+
+\section*{Question 6}
+%You compute a coefficient of determination for a regression model, regressing crime rate per capita (Y) on the size of municipal police force (X), obtaining an $R^2 = 0.6533$. What can you say about the relationship between Y and X?
+
+$65.33\%$ of the variation in crime rate per capita is explained by the size of municipal police force.
+
+\section*{Question 7}
+%You run a regression on 6690 observations, and obtain an SSR = 24332 and an SSTO = 36234. Compute MSE.
+
+We have $n = 6690$, $SSTO = 36234$, and $SSR = 24332$. Since $SSTO = SSR + SSE$, we get $SSE = SSTO - SSR = 36234 - 24332 = 11902$. In addition, $MSE = \frac{SSE}{n - 2}$, so we get $MSE = \frac{11902}{6690 - 2} \approx 1.78$.
+
+\section*{Question 8}
+%Download copierMaintenanceData.csv from Canvas. Column 1 are the $Y_i$ and Column 2 are the $X_i$ . $X_i$ are the number of photocopiers serviced by a service company at a given location, and $Y_i$ are the total number of minutes spent by the service person.
+
+%Use R to compute the answers to the following questions. Do not use ‘black-box’ methods, e.g., lm.copierMaintenanceData.csv. Assume $\alpha$ = 5\% for all relevant questions.
+
+%1. Obtain the OLS estimates.
+
+%2. Write out the fitted regression equation.
+
+%3. What is the numerical value of $\sum{e^2_i}$?
+
+%4. Does $b_0$ provide any relevant information in this context?
+
+%5. Obtain a point estimate of the mean service time when 5 copiers are serviced.
+
+%6. Test the hypothesis that $H_0 : \beta_1 = 0$ using a t test. Show all work.
+
+%7. Test the hypothesis that $H_0 : \beta_1 \leq 1$. Show all work.
+
+%8. Obtain a confidence interval of the expected mean service time when 5 copiers are serviced.
+
+%9. Test the hypothesis that $H_0 : \beta_1 = 0$ using an F test. Show all work. Prove (computationally) that $(t^\star)^2 = F^\star$.
+
+%10. Come up with your own estimates for $b_0$ and $b_1$ (pick any values for them, so long as they are not equal to the OLS values above) and write out your personal fitted regression equation. Using the fitted regression equation, generate the $\hat{Y_i}$ , and subsequently compute the $\sum{e^2_i}$? What is the value? Repeat this exercise until you are convinced that the OLS estimates are the best.
+
+Computational part can be found in \texttt{HW1.R} file.
+
+\paragraph{1}
+The OLS estimates are found using the formulas:
+
+$b_0 = \bar{Y} - b_1 \cdot \bar{X}$ and $b_1 = \frac{\sum_{i=1}^n{(X_i - \bar{X}) \cdot (Y_i - \bar{Y})}}{\sum_{i=1}^n{(X_i - \bar{X})^2}}$.
+
+Using \texttt{R}, we obtain:
+
+$b_0 \approx -0.58$ and $b_1 \approx 15.04$.
+
+\paragraph{2}
+The fitted regression line becomes $\hat{Y} = b_0 + b_1 X = -0.58 + 15.04 X$.
+
+\paragraph{3}
+We have $SSE = \sum_{i=1}^n{e^2_i}$ and $e_i = Y_i - \hat{Y_i}$. Using \texttt{R}, we get $SSE \approx 3416.38$.
+
+\paragraph{4}
+In this context, $b_0$ does not provide any relevant information. In fact, $X$ represents the number of photocopiers services, and $Y$ the number of minutes pent by the service person. So for $X = 0$, it is only logical that $Y = 0$: if no photocopier is serviced, no minutes were spent by the service person.
+
+\paragraph{5}
+The point estimate of the mean service time when 5 copiers are serviced is given by $\hat{Y_5} = b_0 + b_1 \cdot 5$. Using \texttt{R}, we get $\hat{Y_5} \approx 74.60$ minutes.
+
+\paragraph{6}
+We wish to test the null hypothesis $H_0: \beta_0 = 0$. In order to do so, we use a t-test. We first need to estimate $s^2\{b_1\} = \frac{MSE}{\sum_{i=1}^n{(X_i - \bar{X})^2}}$, where $MSE = \frac{\sum_{i=1}^n{e^2_i}}{n - 2}$. In this case, we have $MSE \approx 79.45$, and $s^2\{b_1\} \approx 0.23$.
+
+We get the test statistic $t^* = \frac{b_1}{s\{b_1\}}$, which we compare to $t_{(1-\alpha/2; n-2)}$. Here, we have $t^* \approx 31.12$ and $t_{(1-\alpha/2; n-2)} \approx 2.02$. Since $31.12 > 2.02$, we reject the null hypothesis that $\beta_0 = 0$.
+
+\paragraph{7}
+We now wish to test the nyll hypothesis $H_0 : \beta_1 \leq 1$. In order to do so, we use a t-test. We use the same test statistic $t^*$ as the previous question, but this time we compare it to $t_{(1-\alpha; n-2)}$ since it is a two-sided test. Here, we have $t_{(1-\alpha; n-2)} \approx 1.68$. Since $31.12 > 1.68$, we reject the null hypothesis that $\beta_1 \leq 1$.
+
+\paragraph{8}
+To get a confidence interval of the expected mean service time when 5 copiers are serviced, we first need to estimate $s^2\{\hat{Y_5}\} = MSE [\frac{1}{n} + \frac{(5 - \bar{X})^2}{\sum_{i=1}^n{(X_i - \bar{X})^2}}]$. Using \texttt{R}, we get $s^2\{\hat{Y_5}\} \approx 1.77$. 
+
+Therefore, the 95\% confidence interval is given by $\hat{Y_5} \pm t_{(1-\alpha/2; n-2)} s\{\hat{Y_5}\} \Leftrightarrow 74.60 \pm 2.68$. We get the confidence interval $[71.91; 77.28]$.
+
+\paragraph{9}
+We wish to test the hypothesis $H_0 : \beta_1 = 0$ using an F-test. In order to do so, we first need to calculate the $MSR$. We have $MSR = \frac{SSR}{1} = \sum^n_{i=1}{(\hat{Y_i} - \bar{Y})^2}$. Here, we have $MSR \approx 76960.42$.
+
+We get the test statistic $F^* = \frac{MSR}{MSE}$, which we compare to $F_{(1, n-2)}$. Using \texttt{R}, we get $F^* \approx 968.66$ and $F^* \approx 5.39$. Since $968.66 > 5.39$, we reject the null hypothesis that $\beta_1 = 0$.
+
+We can also see that $(t^*)^2 = 31.12^2 = 968.66 = F^*$.
+
+\paragraph{10}
+Using \texttt{R}, we calculate the $SSE$ for several values of $(b_0, b_1)$:
+
+\begin{itemize}
+\item For $b_0 = 0$ and $b_1 = 15$ , we get $SSE = 3424$
+\item For $b_0 = 0$ and $b_1 = 10$ , we get $SSE = 40524$
+\item For $b_0 = 0$ and $b_1 = 20$ , we get $SSE = 42124$
+\item For $b_0 = 1$ and $b_1 = 15$ , we get $SSE = 3505$
+\item For $b_0 = -1$ and $b_1 = 15$ , we get $SSE = 3433$
+\item For $b_0 = 10$ and $b_1 = 25$ , we get $SSE = 207484$
+\end{itemize}
+
+We can see that the $SSE$s obtained in this fashion are always larger than the one computed in subquestion 3 using the OLS estimates ($3416.38$). The OLS estimates are indeed the best.
+
+\section*{Question 9}
+%Using the data in Table \ref{tab1}, construct a linear regression model by calculating parameters manually to predict the prostate cancer death rate from per day dietary consumption in a country and answer the following questions
+
+%1. What are the OLS estimates?
+
+%2. Write out the fitted regression equation.
+
+%3. Does $b_0$ provide any relevant information in this context?
+
+%4. Interpret the fitted slope coefficient.
+
+%5. Construct a 95\% confidence interval for $b_0 $and $b_1$ .
+
+Computational part can be found in \texttt{HW1.R} file.
+
+\paragraph{1}
+Using \texttt{R}'s \texttt{lm} and \texttt{summary} functions, we find the OLS estimates for $\beta_0$ and $\beta_1$. We get $b_0 \approx -0.61$ and $b_1 \approx 0.11$.
+
+\paragraph{2}
+The fitted regression equation is then given by $\hat{Y} = b_0 + b_1 X = -0.61 + 0.11 X$.
+
+\paragraph{3}
+We can see from the output of \texttt{summary} that the p-value for the intercept ($b_0$) is $0.658 > 0.05$. Therefore we cannot reject the null hypothesis that $b_0 = 0$. In this case, the intercept does not provide any relevant information.% In fact, $X$ represents the dietary fat consumption and $Y$ the death rate. 
+
+\paragraph{4}
+We can see from the output of \texttt{summary} that the p-value for the slope ($b_1$) is $8.97e-07 < 0.05$. Therefore, we reject the null hypothesis that $b_1 = 0$: the slope is not null. This means that an increase of $1$ in dietary fat consumption will lead to an expected increase of the death rate of $0.11$.
+
+\paragraph{5}
+Using the function \texttt{confint} in \texttt{R}, we get the following 95\% confidence intervals for $b_0$ and $b_1$:
+
+$b_0 \in [-3.53; 2.30]$ and $b_1 \in [0.08; 0.14]$.
+
+Note: we can see that $0$ is in the confidence interval for the intercept.
+
+\section*{Question 10}
+%‘In the context of SLR model, whether we regress X on Y or Y on X, the parameter interpretation does not change.’ Verify and explain if this statement is true using the faithful dataset from base R.
+
+In the context of SLR, when we regress $X$ on $Y$, the independent variable is $Y$, and the dependent variable is $X$ (so $X$ is a function of $Y$), whereas if we regress $Y$ on $X$, the independent variable is now $X$, and the dependent variable is now $Y$ ($Y$ is a function of $X$). Therefore, the parameter interpretation (and values) for both models is not the same. In fact, $\beta_0$ is the intercept of the model (the value of the explained variable when the explanatory variable is $0$), and $\beta_1$ is the slope of the regression line (the expected variation in the explained variable when the explanatory variable is increased by $1$ unit), but the interpretation varies depending on which is the independent variable and which is the dependent variable.
+
+Using the \texttt{faithful} data set, we can easily observe this. If we regress \texttt{eruptions} on \texttt{waiting}, we get $b_0 \approx -1.87$ and $b_1 \approx 0.08$, whereas if we regress \texttt{waiting} on \texttt{eruptions}, we get $b_0 \approx 33.47$ and $b_1 \approx 10.73$.
+
+\section*{Question 11}
+%What do you observe about the F-test in the summary of the two models in Question 10? Explain.
+
+We can see that the F statistic in the summary of the two models in Question 10 are equal ($F^* = 1162.1$). Since $n$ is the same for both models, we can conclude that the models are significant to the same statistical level. The coefficients obtained by regressing $Y$ on $X$ and $X$ on $Y$ are similar by means of a linear transformation.
+
+\section*{Question 12}
+%Consider the following data:
+
+%1. X = c(1:100) and Y = x ** 2
+
+%2. X = c(1:100) and Y = 2 * x
+
+%In both, we can establish a relation between Y and X. What do you expect as the $R^2$ value when we regress Y on X? Verify using R and explain.
+
+\paragraph{X = c(1:100) and Y = X ** 2}
+In this case, the relationship between $Y$ and $X$ is quadratic ($Y = X^2$), so doing a linear model is not the best idea. However, we can still run a SLR model, and get a value for the $R^2$. In fact, in this case, since we only have positive values of $X$, $R^2$ will probably be very high. We can verify using \texttt{R} that we get $R^2 \approx 0.94$.
+
+\paragraph{X = c(1:100) and Y = X * 2}
+In this case, the relationship between $Y$ and $X$ is perfectly linear ($Y = 2X$), so doing a regression model is not useful (i.e. overkill) in this case. The $R^2$ value will be $1$, which is easily verifiable with \texttt{R}.
+
+Note: \texttt{R} even throws a warning message when calling the \texttt{summary} for the SLR model in this case: \texttt{essentially perfect fit}.
+
+\section*{Question 13}
+%From the discussion of SLR so far, how do you believe outliers will affect the regression line?
+
+Since the point of SLR is to minimize SSE, the presence of outliers can significantly alter the regression model in order to accomodate bigger errors. Outliers can have a disproportionate impact on the fitting of the regression line. However, one must have a valid proven reason to define an observation of the data set as an outlier and them from the study.
+
+\end{document}
