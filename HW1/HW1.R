@@ -1,3 +1,5 @@
+
+
 #### Question 8
 copier = read.csv("copierMaintenanceData.csv", header = F)
 plot(copier$V2, copier$V1)
@@ -7,14 +9,8 @@ n = length(copier$V1)
 b1 = (sum((copier$V2 - mean(copier$V2))*(copier$V1 - mean(copier$V1))))/(sum((copier$V2 - mean(copier$V2))^2))
 b0 = mean(copier$V1) - b1*mean(copier$V2)
 
-#2
-print("y_hat = b0 + b1*X")
-
 #3
 SSE = sum((copier$V1 - (b0 + b1*copier$V2))^2)
-
-#4
-print("no")
 
 #5
 y5 = b0+b1*5
