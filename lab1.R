@@ -17,15 +17,15 @@ qt(1-.05/2, length(toluca$workHours-2))
 ifelse(abs(t_star) <= qt(1-.05/2, length(toluca$workHours-2)), "Do not reject H0", "Reject H0")
 
 confint(lm_toluca)
-cbind(Estimate=coef(lm_toluca),confint(lm_toluca))
+cbind(Estimate=coef(lm_toluca), confint(lm_toluca))
 
 b0 = mean(toluca$workHours) - b1*mean(toluca$lotSize)
 s2b0 = MSE*(1/length(toluca$lotSize) + mean(toluca$lotSize/(sum((toluca$lotSize - mean(toluca$lotSize))^2))))
 (t_star = b0/sqrt(s2b0)) #something wrong here
 qt(1-.05/2, length(toluca$lotSize-2))
 
-predict(lm_toluca,data.frame(lotSize=33),interval="confidence")
-predict(lm_toluca,data.frame(lotSize=c(33,99)),interval="confidence")
+predict(lm_toluca, data.frame(lotSize=33), interval="confidence")
+predict(lm_toluca, data.frame(lotSize=c(33,99)), interval="confidence")
 
 summary(lm_toluca)$fstatistic
 anova(lm_toluca)
