@@ -7,7 +7,7 @@ summary(lm_dwayne)
 #we expect Y to increase by 1.4546 units when we increase X1 by 1 unit holding X2 remains constant
 
 
-#############3 79
+############# 79
 bodyfat <- read.table("bodyFat.txt", header=T)
 lm_bodyfat <- lm(data=bodyfat, bodyFat~tricep+thigh+midarm)
 anova(lm_bodyfat)
@@ -37,3 +37,34 @@ r2_thigh_given_midarm <- ssr_thigh_given_midarm/sse_midarm
 # Midarm might be correlated with Tricep or Thigh, or it might not explain much. (r2_midarm_given_tricep_thigh)
 # But Midarm is not correlated with either Tricep or Thigh. (r2_tricep_given_midarm and r2_thigh_given_midarm)
 # So Midarm is not explaining much in general.
+
+################ 92
+bodyfat <- read.table("bodyFat.txt", header=T)
+pairs(~ bodyFat + tricep + thigh + midarm, data = bodyfat, main="Scatter Plot Matrix")
+# we want random scatter in the "smaller square"
+# we want linear relationship in first column
+
+# midarm not terribly useful
+# tricep and thigh have strong linear relationship with bodyFat
+# tricep and thigh have strong linear relationship between themselves -> multicollinearity
+# -> model should have either tricep or thigh (probably tricep)
+
+############# 119
+library(lmtest)
+plot(women$height~women$weight)
+lm_women <- lm(women$height~women$weight)
+summary(lm_women)$r.squared # 0.991 !!
+resettest(lm_women, power=2, type="fitted") # significant
+resettest(lm_women, power=3, type="fitted") # not significant
+
+
+
+
+
+
+
+
+
+
+
+
