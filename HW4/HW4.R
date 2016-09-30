@@ -216,7 +216,8 @@ backstep_byPvalue <- function(df, alpha=0.05, yColIndex){
 backstep_byAdjR2 <- function(df, yColIndex){
   # get desired order of columns where the first one is Y
   getOrder <- function(numCol, yColIndex){
-    return(c(yColIndex, 1:(yColIndex-1), (yColIndex+1):numCol))
+    if(yColIndex < numCol) return(c(yColIndex, 1:(yColIndex-1), (yColIndex+1):numCol))
+    return(c(yColIndex, 1:(yColIndex-1)))
   }
   
   # rearrange the data frame to have Y in the first column

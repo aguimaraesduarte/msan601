@@ -51,15 +51,47 @@ pairs(~ bodyFat + tricep + thigh + midarm, data = bodyfat, main="Scatter Plot Ma
 
 ############# 119
 library(lmtest)
-plot(women$height~women$weight)
-lm_women <- lm(women$height~women$weight)
+plot(women$weight~women$height)
+lm_women <- lm(women$weight~women$height)
+lm_women_quadratic <- lm(women$weight~women$height + I(women$height^2))
+lm_women_cubic <- lm(women$weight~women$height + I(women$height^2) + I(women$height^3))
 summary(lm_women)$r.squared # 0.991 !!
+summary(lm_women_quadratic)$r.squared
+summary(lm_women_cubic)$r.squared
 resettest(lm_women, power=2, type="fitted") # significant
 resettest(lm_women, power=3, type="fitted") # not significant
+plot(lm_women$residuals) # very clear quadratic pattern
+plot(lm_women_quadratic$residuals) # looks a lot more scattered/random
+plot(lm_women_cubic$residuals)
 
+############## 133
+adv <- read.csv("Advertising.csv", header=T)
+adv <- adv[-1]
+pairs(add)
+# TV and Radio are not correlated, but there is an interaction
 
+lm_final <- lm(log(adv$Sales)~adv$TV*adv$Radio+I(adv$TV^2))
+summary(lm_final)
+plot(lm_final)
+car::residualPlot(lm_final)
+plot(lm_final$residuals)
 
+# coefficient for TV^2 is negative: diminishing returns for high volumes
 
+############### 150
+credit <- read.csv("Credit.csv", header=T)
+#credit$Gender <- ifelse(credit$Gender == " Male", 1, 0) #male=1
+#credit$Student <- ifelse(credit$Student == "Yes", 1, 0) #student=1
+#credit$Married <- ifelse(credit$Married == "Yes", 1, 0) #married=1
+#credit$Ethnicity <- ifelse(credit$Ethnicity == "Caucasian", 1, 
+#                           ifelse(credit$Ethnicity == "Asian", 2, 3))
+credit$X <- NULL
+pairs(credit[,c(1,8,11)])
+cor(credit[,c(1,8,11)])
+lm1 <- lm(data=credit, Balance~Income+Student)
+summary(lm1)
+car::residualPlot(lm1)
+plot(lm1)
 
 
 
