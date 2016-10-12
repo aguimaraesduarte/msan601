@@ -79,7 +79,7 @@ plot(lm_final$residuals)
 # coefficient for TV^2 is negative: diminishing returns for high volumes
 
 ############### 150
-credit <- read.csv("Credit.csv", header=T)
+credit <- read.csv("../Credit.csv", header=T)
 #credit$Gender <- ifelse(credit$Gender == " Male", 1, 0) #male=1
 #credit$Student <- ifelse(credit$Student == "Yes", 1, 0) #student=1
 #credit$Married <- ifelse(credit$Married == "Yes", 1, 0) #married=1
